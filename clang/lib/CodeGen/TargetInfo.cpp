@@ -256,7 +256,14 @@ namespace {
 class DefaultTargetCodeGenInfo : public TargetCodeGenInfo {
 public:
   DefaultTargetCodeGenInfo(CodeGen::CodeGenTypes &CGT)
-      : TargetCodeGenInfo(std::make_unique<DefaultABIInfo>(CGT)) {}
+      : TargetCodeGenInfo(std::make_unique<DefaultABIInfo>(CGT)) {
+    // Embedded targets such as Xtensa use Swift calling conventions but do
+    // not have a dedicated Clang target-codegen ABI class yet.  Keep the
+    // generic Swift ABI available for those targets instead of leaving the
+    // helper uninitialized and crashing during Swift IR generation.
+    SwiftInfo = std::make_unique<SwiftABIInfo>(
+        CGT, /*SwiftErrorInRegister=*/false);
+  }
 };
 } // namespace
 

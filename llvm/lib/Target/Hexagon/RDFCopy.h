@@ -26,7 +26,7 @@ namespace rdf {
 
   struct CopyPropagation {
     CopyPropagation(DataFlowGraph &dfg) : MDT(dfg.getDT()), DFG(dfg),
-        RDefMap(std::less<RegisterRef>(DFG.getPRI())) {}
+        RDefMap(RegisterRefLess(DFG.getPRI())) {}
 
     virtual ~CopyPropagation() = default;
 

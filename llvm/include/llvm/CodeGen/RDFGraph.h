@@ -447,8 +447,6 @@ private:
   AllocatorTy MemPool;
 };
 
-using RegisterSet = std::set<RegisterRef>;
-
 struct TargetOperandInfo {
   TargetOperandInfo(const TargetInstrInfo &tii) : TII(tii) {}
   virtual ~TargetOperandInfo() = default;
